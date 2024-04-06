@@ -13,6 +13,8 @@ class InpaintPreprocessor:
         mask = torch.nn.functional.interpolate(mask.reshape((-1, 1, mask.shape[-2], mask.shape[-1])), size=(image.shape[1], image.shape[2]), mode="bilinear")
         mask = mask.movedim(1,-1).expand((-1,-1,-1,3))
         image = image.clone()
+        if image.shape[3] > 3:
++            image = image[:, :, :, :3]
         image[mask > 0.5] = -1.0  # set as masked pixel
         return (image,)
 
