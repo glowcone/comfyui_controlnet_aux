@@ -14,7 +14,7 @@ class InpaintPreprocessor:
         mask = mask.movedim(1,-1).expand((-1,-1,-1,3))
         image = image.clone()
         if image.shape[3] > 3:
-+            image = image[:, :, :, :3]
+            image = image[:, :, :, :3]
         image[mask > 0.5] = -1.0  # set as masked pixel
         return (image,)
 
